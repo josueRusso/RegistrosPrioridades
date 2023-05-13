@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Registro_de_Prioridades.DAL;
 using Registro_de_Prioridades.Entidades;
 using System.Diagnostics.Contracts;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Registro_de_Prioridades.BLL
 {
@@ -63,7 +64,15 @@ namespace Registro_de_Prioridades.BLL
         public bool Validar(string? descripcion)
         {
             bool confirmar = false;
-            confirmar = _context.Prioridad.Any(e => e.Descripcion.ToLower() == descripcion.ToLower());
+            try
+            {
+                confirmar = _context.Prioridad.Any(e => e.Descripcion.ToLower() == descripcion.ToLower());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             return confirmar;
         }
 
