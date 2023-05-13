@@ -1,5 +1,11 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
+using Registro_de_Prioridades.DAL;
+using Registro_de_Prioridades.BLL;
+using Registro_de_Prioridades.Data;
+using Registro_de_Prioridades.Entidades;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+//DbContext de la base de datos
+builder.Services.AddDbContext<Context>(options =>
+options.UseSqlite(builder.Configuration.GetConnectionString("DBConnection"))
+);
+builder.Services.AddScoped<PrioridadBLL>();
 
 var app = builder.Build();
 
